@@ -11,3 +11,5 @@ jobs:
       - run: |
           echo "very soon an aws command will run \
           in place of this echo command.."
+      - run: |
+          cat $GITHUB_EVENT_PATH
