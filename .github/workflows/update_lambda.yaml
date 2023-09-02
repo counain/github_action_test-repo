@@ -10,7 +10,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        
+        with:
+          fetch_depth: 0
       - name: test echo command
         run: |
           echo "very soon an aws command will run \
