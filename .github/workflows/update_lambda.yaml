@@ -9,9 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: |
+      - name: test echo command
+        run: |
           echo "very soon an aws command will run \
           in place of this echo command.."
-      - run: |
+      - name: checking around and within the working directory
+        run: |
           pwd
           ls $(pwd)
+
+      - name: putting last modified file paths in a variable
+        run: echo "modded_paths=$(git diff --name-only -r HEAD^1 HEAD)" >> $GITHUB_OUTPUT
+      
+      - name: echoing variable storing last modified file paths
+        run: |
+          echo ${{ env.modded_paths }}
+        
