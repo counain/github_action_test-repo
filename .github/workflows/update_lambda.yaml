@@ -25,13 +25,14 @@ jobs:
         run: git branch --show
 
       - name: putting last modified file paths in a variable
-        run: echo "modded_paths=$(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }})" >> $GITHUB_ENV
+        id: modded_paths
+        run: echo "modded_paths=$(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }})" >> $GITHUB_OUTPUT
       
-      # - name: echoing variable storing last modified file paths
-      #   run: |
-      #     for name in ${{ env.modded_paths }}; do
-      #       if [[ $name =~ lambda_function\.py$ ]]; then
-      #           echo $name | rev | cut -d "/" -f 2 | rev
-      #       fi
-      #     done
+      - name: echoing variable storing last modified file paths
+        run: |
+          for name in ${{ steps.modded_paths.outputs.modded_paths }}; do
+            if [[ $name =~ lambda_function\.py$ ]]; then
+                echo $name | rev | cut -d "/" -f 2 | rev
+            fi
+          done
         
