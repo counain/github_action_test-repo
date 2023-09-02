@@ -1,8 +1,9 @@
 name: map-update-to-the-appropriate-lambda_function
-on:
-  push:
-    paths:
-      - '**/lambda_function_1/**'
+# on:
+#   push:
+#     paths:
+#       - '**/lambda_function_1/**'
+on: [push]
 jobs:
   map-commit-to-lambda:
     runs-on: ubuntu-latest
@@ -12,4 +13,5 @@ jobs:
           echo "very soon an aws command will run \
           in place of this echo command.."
       - run: |
-          cat $GITHUB_EVENT_PATH
+          pwd
+          ls $(pwd)
