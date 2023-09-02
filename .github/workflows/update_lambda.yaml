@@ -10,8 +10,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        with:
-          fetch_depth: 2
+        
       - name: test echo command
         run: |
           echo "very soon an aws command will run \
@@ -25,7 +24,7 @@ jobs:
         run: git branch --show
 
       - name: putting last modified file paths in a variable
-        run: echo $(git diff --name-only -r HEAD^1 HEAD)
+        run: echo $(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }})
       
       # - name: echoing variable storing last modified file paths
       #   run: |
