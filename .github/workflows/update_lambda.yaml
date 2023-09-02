@@ -17,11 +17,14 @@ jobs:
         run: |
           pwd
           ls $(pwd)
+      
+      - name: show branch
+        run: git branch --show
 
       - name: putting last modified file paths in a variable
-        run: echo "modded_paths=$(git diff --name-only -r HEAD^1 HEAD)" >> $GITHUB_OUTPUT
+      #   run: echo "modded_paths=$(git diff --name-only -r HEAD^1 HEAD)" >> $GITHUB_OUTPUT
       
-      - name: echoing variable storing last modified file paths
-        run: |
-          echo ${{ env.modded_paths }}
+      # - name: echoing variable storing last modified file paths
+      #   run: |
+      #     echo ${{ env.modded_paths }}
         
