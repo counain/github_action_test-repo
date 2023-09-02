@@ -26,7 +26,8 @@ jobs:
 
       - name: putting last modified file paths in a variable
         id: modded_paths
-        run: echo "modded_paths=$(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }})" >> $GITHUB_OUTPUT
+        # run: echo "modded_paths=$(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }})" >> $GITHUB_OUTPUT
+        run: echo "modded_paths=$(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }} | xargs )" >> $GITHUB_OUTPUT
       
       - name: echoing variable storing last modified file paths
         run: |
