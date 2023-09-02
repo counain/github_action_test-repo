@@ -8,7 +8,10 @@ jobs:
   map-commit-to-lambda:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch_depth: 2
       - name: test echo command
         run: |
           echo "very soon an aws command will run \
@@ -21,8 +24,8 @@ jobs:
       - name: show branch
         run: git branch --show
 
-      # - name: putting last modified file paths in a variable
-      #   run: echo "modded_paths=$(git diff --name-only -r HEAD^1 HEAD)" >> $GITHUB_OUTPUT
+      - name: putting last modified file paths in a variable
+        run: echo "modded_paths=$(git diff --name-only -r HEAD^1 HEAD)" >> $GITHUB_OUTPUT
       
       # - name: echoing variable storing last modified file paths
       #   run: |
