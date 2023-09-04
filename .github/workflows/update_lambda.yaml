@@ -51,6 +51,7 @@ jobs:
             if [[ $path =~ lambda_function\.py$ ]]; then
                 function_name=$(echo $name | rev | cut -d "/" -f 2 | rev)
                 zip -j function.zip $path
+                echo "$function_name"
                 aws lambda update-function-code --function-name "$function_name" --zip-file fileb://function.zip
             fi
           done
