@@ -7,7 +7,7 @@ on:
   push
 env:
   AWS_REGION: us-west-2
-  
+
 permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
@@ -51,9 +51,7 @@ jobs:
             if [[ $path =~ lambda_function\.py$ ]]; then
                 function_name=$(echo $name | rev | cut -d "/" -f 2 | rev)
                 zip -j function.zip $path
-                aws lambda update-function-code \
-                  --function-name $function_name \
-                  --zip-file fileb://function.zip
+                aws lambda update-function-code --function-name $function_name --zip-file fileb://function.zip
             fi
           done
         
