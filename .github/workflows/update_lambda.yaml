@@ -1,16 +1,8 @@
 name: map-update-to-the-appropriate-lambda_function
-# on:
-#   push:
-#     paths:
-#       - '**/lambda_function_1/**'
 on:
-  push
-env:
-  AWS_REGION: us-west-2
-
-permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
+  push:
+    paths:
+     - master
 jobs:
   map-commit-to-lambda:
     runs-on: ubuntu-latest
@@ -19,12 +11,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::111687030012:role/iamRoleForGitHubActionsOIDC
-          role-session-name: temporarylambdasession
-          aws-region: ${{ env.AWS_REGION }}
       - name: test echo command
         run: |
           echo "very soon an aws command will run \
@@ -39,11 +25,13 @@ jobs:
 
       - name: putting last modified file paths in a variable
         id: modded_paths
-        # run: echo "modded_paths=$(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }})" >> $GITHUB_OUTPUT
         run: echo "modded_paths=$(git diff --name-only -r ${{ github.event.after }} ${{ github.event.before }} | xargs )" >> $GITHUB_OUTPUT
       
       - name: echoing variable storing last modified file paths
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-south-1
           modded_paths: ${{ steps.modded_paths.outputs.modded_paths }}
         run: |
           for path in $modded_paths; do
