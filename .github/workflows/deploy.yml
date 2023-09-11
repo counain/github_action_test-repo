@@ -1,8 +1,8 @@
 name: map-update-to-the-appropriate-lambda_function
 on:
   push:
-    paths:
-     - master
+    branches:
+      - master
 jobs:
   map-commit-to-lambda:
     runs-on: ubuntu-latest
